@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ppv="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <SeekBar
+        android:layout_marginTop="16dp"
+        android:layout_gravity="center_horizontal"
+        android:id="@+id/seekbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:max="100"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:baselineAligned="false"
+        android:id="@+id/container">
+
+        <com.filippudak.ProgressPieView.ProgressPieView
+            android:layout_margin="8dp"
+            android:layout_width="96dp"
+            android:layout_height="96dp"
+            android:layout_gravity="center_horizontal"
+            android:id="@+id/progressPieView"/>
+
+        <com.filippudak.ProgressPieView.ProgressPieView
+            android:layout_margin="8dp"
+            android:layout_gravity="center_horizontal"
+            android:id="@+id/progressPieViewXml"
+            android:layout_width="96dp"
+            android:layout_height="96dp"
+            android:textColor="@color/holo_orange_dark"
+            android:textSize="18sp"
+            android:text="Xml"
+            ppv:typeface="fonts/Roboto/RobotoCondensed-Bold.ttf"
+            ppv:strokeWidth="6dp"
+            ppv:strokeColor="@color/holo_green_light"
+            ppv:backgroundColor="@color/holo_purple"
+            ppv:progressColor="@color/holo_red_light"/>
+    </LinearLayout>
+
+
+
+
+</LinearLayout>
