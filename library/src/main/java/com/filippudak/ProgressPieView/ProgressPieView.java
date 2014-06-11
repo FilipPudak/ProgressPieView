@@ -23,6 +23,15 @@ public class ProgressPieView extends View {
         public void onProgressCompleted();
     }
 
+    /**
+     * Fills the progress radially in a clockwise direction.
+     */
+    public static final int FILL_TYPE_RADIAL = 0;
+    /**
+     * Fills the progress expanding from the center of the view.
+     */
+    public static final int FILL_TYPE_CENTER = 1;
+
     private static final int DEFAULT_MAX = 100;
     private static final int DEFAULT_PROGRESS = 0;
     private static final int DEFAULT_START_ANGLE = -90;
@@ -49,8 +58,8 @@ public class ProgressPieView extends View {
     private Paint mTextPaint;
     private Paint mProgressPaint;
     private Paint mBackgroundPaint;
-    private RectF mOuterRectF;
     private RectF mInnerRectF;
+    private int mProgressFillType = FILL_TYPE_RADIAL;
 
     public ProgressPieView(Context context) {
         this(context, null);
@@ -95,6 +104,8 @@ public class ProgressPieView extends View {
         int textColor = res.getColor(R.color.default_text_color);
         textColor = a.getColor(R.styleable.ProgressPieView_android_textColor, textColor);
 
+        mProgressFillType = a.getInteger(R.styleable.ProgressPieView_progressFillType, mProgressFillType);
+
         a.recycle();
 
         mBackgroundPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -115,23 +126,33 @@ public class ProgressPieView extends View {
         mTextPaint.setTextSize(mTextSize);
         mTextPaint.setTextAlign(Paint.Align.CENTER);
 
-        mOuterRectF = mInnerRectF = new RectF();
-
+        mInnerRectF = new RectF();
         mImageRect = new Rect();
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        mOuterRectF.set(0, 0, canvas.getWidth(), canvas.getHeight());
         mInnerRectF.set(0, 0, canvas.getWidth(), canvas.getHeight());
         final int halfBorder = (int) (mStrokePaint.getStrokeWidth() / 2f + 0.5f);
         mInnerRectF.inset(halfBorder, halfBorder);
 
         canvas.drawArc(mInnerRectF, 0, 360, true, mBackgroundPaint);
 
-        float sweepAngle = 360 * mProgress / mMax;
-        canvas.drawArc(mInnerRectF, mStartAngle, sweepAngle, true, mProgressPaint);
+        switch (mProgressFillType) {
+            case FILL_TYPE_RADIAL:
+                float sweepAngle = 360 * mProgress / mMax;
+                canvas.drawArc(mInnerRectF, mStartAngle, sweepAngle, true, mProgressPaint);
+                break;
+            case FILL_TYPE_CENTER:
+                float centerX = canvas.getWidth() / 2;
+                float centerY = canvas.getHeight() / 2;
+                float radius = (canvas.getWidth() / 2) * ((float) mProgress / mMax);
+                canvas.drawCircle(centerX, centerY, radius + 0.5f - mStrokePaint.getStrokeWidth(), mProgressPaint);
+                break;
+            default:
+                throw new IllegalArgumentException("Invalid Progress Fill = " + mProgressFillType);
+        }
 
         if (!TextUtils.isEmpty(mText) && mShowText) {
             if (!TextUtils.isEmpty(mTypeface)) {
@@ -159,7 +180,7 @@ public class ProgressPieView extends View {
         }
 
         if (mShowStroke) {
-            canvas.drawOval(mOuterRectF, mStrokePaint);
+            canvas.drawOval(mInnerRectF, mStrokePaint);
         }
 
     }
@@ -207,6 +228,21 @@ public class ProgressPieView extends View {
             }
         }
         invalidate();
+    }
+
+    /**
+     * Gets the start angle the {@link #FILL_TYPE_RADIAL} uses.
+     */
+    public int getStartAngle() {
+        return mStartAngle;
+    }
+
+    /**
+     * Sets the start angle the {@link #FILL_TYPE_RADIAL} uses.
+     * @param startAngle start angle in degrees
+     */
+    public void setStartAngle(int startAngle) {
+        mStartAngle = startAngle;
     }
 
     /**
@@ -413,6 +449,21 @@ public class ProgressPieView extends View {
     public void setShowImage(boolean showImage) {
         mShowImage = showImage;
         invalidate();
+    }
+
+    /**
+     * Gets the progress fill type.
+     */
+    public int getProgressFillType() {
+        return mProgressFillType;
+    }
+
+    /**
+     * Sets the progress fill type.
+     * @param fillType one of {@link #FILL_TYPE_CENTER}, {@link #FILL_TYPE_RADIAL}
+     */
+    public void setProgressFillType(int fillType) {
+        mProgressFillType = fillType;
     }
 
     /**

@@ -9,7 +9,6 @@ import android.widget.SeekBar;
 
 import com.filippudak.ProgressPieView.ProgressPieView;
 
-
 public class MainActivity extends ActionBarActivity {
 
     private static final int SIZE = 96;
@@ -25,10 +24,10 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
 
+        // Code version
         float density = getResources().getDisplayMetrics().density;
         int size = (int) (density * SIZE);
         int margin = (int) (density * MARGIN);
-
         LinearLayout container = (LinearLayout) findViewById(R.id.container);
         mProgressPieViewCode = new ProgressPieView(this);
         final LinearLayout.LayoutParams layoutParams
@@ -43,10 +42,10 @@ public class MainActivity extends ActionBarActivity {
         mProgressPieViewCode.setProgressColor(getResources().getColor(R.color.holo_green_dark));
         mProgressPieViewCode.setStrokeColor(getResources().getColor(R.color.holo_blue_dark));
         mProgressPieViewCode.setTypeface("fonts/Roboto/Roboto-Italic.ttf");
-
+        mProgressPieViewCode.setStartAngle(720);
         container.addView(mProgressPieViewCode);
 
-        mSeekBar = (SeekBar) findViewById(R.id.seekbar);
+        // Default version
         mProgressPieView = (ProgressPieView) findViewById(R.id.progressPieView);
         mProgressPieView.setOnProgressListener(new ProgressPieView.OnProgressListener() {
             @Override
@@ -60,8 +59,12 @@ public class MainActivity extends ActionBarActivity {
                 mProgressPieView.setImageResource(R.drawable.ic_action_accept);
             }
         });
+
+        // XML version
         mProgressPieViewXml = (ProgressPieView) findViewById(R.id.progressPieViewXml);
 
+
+        mSeekBar = (SeekBar) findViewById(R.id.seekbar);
         mSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
@@ -81,8 +84,6 @@ public class MainActivity extends ActionBarActivity {
 
             }
         });
-
-
 
     }
 }

@@ -15,5 +15,9 @@
         <attr name="android:text"/>
         <attr name="android:textSize"/>
         <attr name="android:textColor"/>
+        <attr name="progressFillType" format="enum" >
+            <enum name="radial" value="0"/>
+            <enum name="center" value="1"/>
+        </attr>
     </declare-styleable>
 </resources>

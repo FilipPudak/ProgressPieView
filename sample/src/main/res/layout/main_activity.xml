@@ -39,6 +39,7 @@
             android:textSize="18sp"
             android:text="Xml"
             ppv:typeface="fonts/Roboto/RobotoCondensed-Bold.ttf"
+            ppv:progressFillType="center"
             ppv:strokeWidth="6dp"
             ppv:strokeColor="@color/holo_green_light"
             ppv:backgroundColor="@color/holo_purple"
