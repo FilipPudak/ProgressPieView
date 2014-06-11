@@ -68,9 +68,11 @@ Author : Filip Puđak (filip.pudak@gmail.com)
 </a>
 <a href="https://www.linkedin.com/pub/filip-puđak/3b/a30/180">
   <img alt="LinkedIn"
-       src="https://github.com/FilipPudak/ProgressPieView/raw/master/demo/images/linkedin.png" />
+       src="https://github.com/FilipPudak/ProgressPieView/raw/master/sample/images/linkedin.png" />
 </a>
 
+Thanks to Gabriele Mariotti and Chris Banses for the maven push gradle code!
+Thanks to Prateek Srivastava and Roman Nurik for the base idea which was ProgressButton!
 
 License
 =======
