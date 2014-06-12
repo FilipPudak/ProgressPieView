@@ -23,18 +23,11 @@ Usage
 
 Find out the latest version from [Maven Central](http://search.maven.org/) or [Gradle Please](http://gradleplease.appspot.com/).
 
-Maven:
-```xml
-<dependency>
-  <groupId>com.filippudak.progresspieview</groupId>
-  <artifactId>library</artifactId>
-  <version>(latest version here)</version>
-</dependency>
+build.gradle:
 ```
-
-Gradle:
-```
-compile 'com.filippudak.progresspieview:library:(latest version here)@aar'
+dependencies {
+    compile 'com.github.filippudak.progresspieview:library:1.0.0'
+}
 ```
 
 Example
@@ -72,6 +65,7 @@ Author : Filip Puđak (filip.pudak@gmail.com)
 </a>
 
 Thanks to Gabriele Mariotti and Chris Banses for the maven push gradle code!
+
 Thanks to Prateek Srivastava and Roman Nurik for the base idea which was ProgressButton!
 
 License
