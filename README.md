@@ -25,7 +25,7 @@ To get a feel of how it works you can also try out the sample:
 
 <a href="https://play.google.com/store/apps/details?id=com.filippudak.ProgressPieView.sample">
   <img alt="Get it on Google Play"
-       src="/images/brand/en_generic_rgb_wo_60.png" />
+       src="https://github.com/FilipPudak/ProgressPieView/raw/master/sample/images/en_generic_rgb_wo_60.png" />
 </a>
 
 Find out the latest version from [Maven Central](http://search.maven.org/) or [Gradle Please](http://gradleplease.appspot.com/).
