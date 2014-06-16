@@ -21,6 +21,13 @@ Choose from the broad spectre of styleable elements:
 Usage
 ======
 
+To get a feel of how it works you can also try out the sample:
+
+<a href="https://play.google.com/store/apps/details?id=com.filippudak.ProgressPieView.sample">
+  <img alt="Get it on Google Play"
+       src="/images/brand/en_generic_rgb_wo_60.png" />
+</a>
+
 Find out the latest version from [Maven Central](http://search.maven.org/) or [Gradle Please](http://gradleplease.appspot.com/).
 
 build.gradle:
@@ -64,9 +71,9 @@ Author : Filip Puđak (filip.pudak@gmail.com)
        src="https://github.com/FilipPudak/ProgressPieView/raw/master/sample/images/linkedin.png" />
 </a>
 
-Thanks to Gabriele Mariotti and Chris Banses for the maven push gradle code!
+Thanks to [+Gabriele Mariotti](https://plus.google.com/+GabrieleMariotti/) and [+Chris Banes](https://plus.google.com/+ChrisBanes/) for the maven push gradle code!
 
-Thanks to Prateek Srivastava and Roman Nurik for the base idea which was ProgressButton!
+Thanks to [+Prateek Srivastava](https://plus.google.com/u/0/+PrateekSrivastava/) and [+Roman Nurik](https://plus.google.com/+RomanNurik/) for the base idea which was ProgressButton!
 
 License
 =======
