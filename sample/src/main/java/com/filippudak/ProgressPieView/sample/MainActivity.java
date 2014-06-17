@@ -50,11 +50,17 @@ public class MainActivity extends ActionBarActivity {
         mProgressPieView.setOnProgressListener(new ProgressPieView.OnProgressListener() {
             @Override
             public void onProgressChanged(int progress, int max) {
-
+                if (!mProgressPieView.isTextShowing()) {
+                    mProgressPieView.setShowText(true);
+                    mProgressPieView.setShowImage(false);
+                }
             }
 
             @Override
             public void onProgressCompleted() {
+                if (!mProgressPieView.isImageShowing()) {
+                    mProgressPieView.setShowImage(true);
+                }
                 mProgressPieView.setShowText(false);
                 mProgressPieView.setImageResource(R.drawable.ic_action_accept);
             }
@@ -63,7 +69,7 @@ public class MainActivity extends ActionBarActivity {
         // XML version
         mProgressPieViewXml = (ProgressPieView) findViewById(R.id.progressPieViewXml);
 
-
+        // SeekBar 
         mSeekBar = (SeekBar) findViewById(R.id.seekbar);
         mSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
