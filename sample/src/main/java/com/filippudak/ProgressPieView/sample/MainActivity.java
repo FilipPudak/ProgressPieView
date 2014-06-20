@@ -31,8 +31,8 @@ public class MainActivity extends ActionBarActivity {
         LinearLayout container = (LinearLayout) findViewById(R.id.container);
         mProgressPieViewCode = new ProgressPieView(this);
         final LinearLayout.LayoutParams layoutParams
-                = new LinearLayout.LayoutParams(size, size);
-        layoutParams.gravity = Gravity.CENTER_HORIZONTAL;
+                = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT, 1);
+        layoutParams.gravity = Gravity.CENTER;
         layoutParams.setMargins(margin, margin, margin, margin);
         mProgressPieViewCode.setLayoutParams(layoutParams);
         mProgressPieViewCode.setText("Code");

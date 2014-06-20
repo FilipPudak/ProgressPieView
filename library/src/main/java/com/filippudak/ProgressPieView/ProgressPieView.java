@@ -37,6 +37,7 @@ public class ProgressPieView extends View {
     private static final int DEFAULT_START_ANGLE = -90;
     private static final float DEFAULT_STROKE_WIDTH = 3f;
     private static final float DEFAULT_TEXT_SIZE = 14f;
+    private static final int DEFAULT_VIEW_SIZE = 96;
 
     private static LruCache<String, Typeface> sTypefaceCache = new LruCache<String, Typeface>(8);
 
@@ -60,6 +61,8 @@ public class ProgressPieView extends View {
     private Paint mBackgroundPaint;
     private RectF mInnerRectF;
     private int mProgressFillType = FILL_TYPE_RADIAL;
+
+    private int mViewSize;
 
     public ProgressPieView(Context context) {
         this(context, null);
@@ -131,11 +134,25 @@ public class ProgressPieView extends View {
     }
 
     @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+
+        int width = resolveSize(DEFAULT_VIEW_SIZE, widthMeasureSpec);
+        int height = resolveSize(DEFAULT_VIEW_SIZE, heightMeasureSpec);
+        mViewSize = Math.min(width, height);
+
+        setMeasuredDimension(width, height);
+    }
+
+    @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        mInnerRectF.set(0, 0, canvas.getWidth(), canvas.getHeight());
+        mInnerRectF.set(0, 0, mViewSize, mViewSize);
+        mInnerRectF.offset((getWidth() - mViewSize) / 2, (getHeight() - mViewSize) / 2);
         final int halfBorder = (int) (mStrokePaint.getStrokeWidth() / 2f + 0.5f);
         mInnerRectF.inset(halfBorder, halfBorder);
+        float centerX = mInnerRectF.centerX();
+        float centerY = mInnerRectF.centerY();
 
         canvas.drawArc(mInnerRectF, 0, 360, true, mBackgroundPaint);
 
@@ -145,9 +162,7 @@ public class ProgressPieView extends View {
                 canvas.drawArc(mInnerRectF, mStartAngle, sweepAngle, true, mProgressPaint);
                 break;
             case FILL_TYPE_CENTER:
-                float centerX = canvas.getWidth() / 2;
-                float centerY = canvas.getHeight() / 2;
-                float radius = (canvas.getWidth() / 2) * ((float) mProgress / mMax);
+                float radius = (mViewSize / 2) * ((float) mProgress / mMax);
                 canvas.drawCircle(centerX, centerY, radius + 0.5f - mStrokePaint.getStrokeWidth(), mProgressPaint);
                 break;
             default:
@@ -166,8 +181,8 @@ public class ProgressPieView extends View {
                 }
                 mTextPaint.setTypeface(typeface);
             }
-            int xPos = canvas.getWidth() / 2;
-            int yPos = (int) ((canvas.getHeight() / 2) - ((mTextPaint.descent() + mTextPaint.ascent()) / 2));
+            int xPos = (int) centerX;
+            int yPos = (int) (centerY - (mTextPaint.descent() + mTextPaint.ascent()) / 2);
             canvas.drawText(mText, xPos, yPos, mTextPaint);
         }
 
