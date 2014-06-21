@@ -33,7 +33,7 @@ Find out the latest version from [Maven Central](http://search.maven.org/) or [G
 build.gradle:
 ```
 dependencies {
-    compile 'com.github.filippudak.progresspieview:library:1.0.0'
+    compile 'com.github.filippudak.progresspieview:library:1.0.1'
 }
 ```
 
