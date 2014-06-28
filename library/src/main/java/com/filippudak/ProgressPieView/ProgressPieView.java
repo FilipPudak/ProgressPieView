@@ -35,6 +35,8 @@ public class ProgressPieView extends View {
 	public static final int SLOW_ANIMATION_SPEED = 100;
     public static final int MEDIUM_ANIMATION_SPEED = 50;
     public static final int FAST_ANIMATION_SPEED = 5;
+	
+	public static final int ANIMATION_PROGRESS_LIMIT = 100;
 
     private static final int DEFAULT_MAX = 100;
     private static final int DEFAULT_PROGRESS = 0;
@@ -67,6 +69,7 @@ public class ProgressPieView extends View {
     private int mProgressFillType = FILL_TYPE_RADIAL;
 	
 	private int mAnimationSpeed = FAST_ANIMATION_SPEED;
+	private int mAnimationProgressLimit = ANIMATION_PROGRESS_LIMIT;
 
     private int mViewSize;
 	
@@ -75,7 +78,10 @@ public class ProgressPieView extends View {
     private Runnable mProgressFillRunnable = new Runnable() {
         @Override
         public void run() {
-            if (getProgress() != 100) {
+            if(getProgress() > mAnimationProgressLimit) {
+                throw new IllegalArgumentException(
+                        String.format("AnimationProgressLimit (%d) is lower than the current progress (%d) ", mAnimationProgressLimit, mProgress));
+            } else if (getProgress() < mAnimationProgressLimit) {
                 setProgress(getProgress() + 1);
                 mProgressHandler.postDelayed(this, mAnimationSpeed);
             } else {
@@ -237,6 +243,20 @@ public class ProgressPieView extends View {
         }
         mMax = max;
         invalidate();
+    }
+	
+	/**
+     * Sets the progress limit used inside the mProgressFillRunnable Runnable.
+     */
+    public void setAnimationProgressLimit(int progressLimit){
+        this.mAnimationProgressLimit = progressLimit;
+    }
+
+    /**
+     * Returns the current animation progress limit.
+     */
+    public int getAnimationProgressLimit(){
+        return this.mAnimationProgressLimit;
     }
 	
 	/**
