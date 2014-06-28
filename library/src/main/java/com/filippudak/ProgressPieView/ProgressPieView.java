@@ -31,6 +31,10 @@ public class ProgressPieView extends View {
      * Fills the progress expanding from the center of the view.
      */
     public static final int FILL_TYPE_CENTER = 1;
+	
+	public static final int SLOW_ANIMATION_SPEED = 100;
+    public static final int MEDIUM_ANIMATION_SPEED = 50;
+    public static final int FAST_ANIMATION_SPEED = 5;
 
     private static final int DEFAULT_MAX = 100;
     private static final int DEFAULT_PROGRESS = 0;
@@ -61,8 +65,24 @@ public class ProgressPieView extends View {
     private Paint mBackgroundPaint;
     private RectF mInnerRectF;
     private int mProgressFillType = FILL_TYPE_RADIAL;
+	
+	private int mAnimationSpeed = FAST_ANIMATION_SPEED;
 
     private int mViewSize;
+	
+	private final Handler mProgressHandler = new Handler();
+
+    private Runnable mProgressFillRunnable = new Runnable() {
+        @Override
+        public void run() {
+            if (getProgress() != 100) {
+                setProgress(getProgress() + 1);
+                mProgressHandler.postDelayed(this, mAnimationSpeed);
+            } else {
+                mProgressHandler.removeCallbacks(this);
+            }
+        }
+    };
 
     public ProgressPieView(Context context) {
         this(context, null);
@@ -216,6 +236,28 @@ public class ProgressPieView extends View {
                     String.format("Max (%d) must be > 0 and >= %d", max, mProgress));
         }
         mMax = max;
+        invalidate();
+    }
+	
+	/**
+     * Sets the animation speed used in the animateProgressFill method.
+     */
+    public void setAnimationSpeed(int animationSpeed){
+        this.mAnimationSpeed = animationSpeed;
+    }
+
+    /**
+     * Returns the current animation speed used in animateProgressFill method.
+     */
+    public int getAnimationSpeed(){
+        return this.mAnimationSpeed;
+    }
+
+    /**
+     * Animates a progress fill of the view, using a Handler and a Runnable.
+     */
+    public void animateProgressFill(){
+        mProgressFillRunnable.run();
         invalidate();
     }
 
