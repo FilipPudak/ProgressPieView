@@ -10,6 +10,7 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
@@ -31,12 +32,10 @@ public class ProgressPieView extends View {
      * Fills the progress expanding from the center of the view.
      */
     public static final int FILL_TYPE_CENTER = 1;
-	
-	public static final int SLOW_ANIMATION_SPEED = 100;
-    public static final int MEDIUM_ANIMATION_SPEED = 50;
-    public static final int FAST_ANIMATION_SPEED = 5;
-	
-	public static final int ANIMATION_PROGRESS_LIMIT = 100;
+
+	public static final int SLOW_ANIMATION_SPEED = 50;
+    public static final int MEDIUM_ANIMATION_SPEED = 25;
+    public static final int FAST_ANIMATION_SPEED = 1;
 
     private static final int DEFAULT_MAX = 100;
     private static final int DEFAULT_PROGRESS = 0;
@@ -68,27 +67,11 @@ public class ProgressPieView extends View {
     private RectF mInnerRectF;
     private int mProgressFillType = FILL_TYPE_RADIAL;
 	
-	private int mAnimationSpeed = FAST_ANIMATION_SPEED;
-	private int mAnimationProgressLimit = ANIMATION_PROGRESS_LIMIT;
+	private int mAnimationSpeed = MEDIUM_ANIMATION_SPEED;
 
     private int mViewSize;
 	
 	private final Handler mProgressHandler = new Handler();
-
-    private Runnable mProgressFillRunnable = new Runnable() {
-        @Override
-        public void run() {
-            if(getProgress() > mAnimationProgressLimit) {
-                throw new IllegalArgumentException(
-                        String.format("AnimationProgressLimit (%d) is lower than the current progress (%d) ", mAnimationProgressLimit, mProgress));
-            } else if (getProgress() < mAnimationProgressLimit) {
-                setProgress(getProgress() + 1);
-                mProgressHandler.postDelayed(this, mAnimationSpeed);
-            } else {
-                mProgressHandler.removeCallbacks(this);
-            }
-        }
-    };
 
     public ProgressPieView(Context context) {
         this(context, null);
@@ -246,20 +229,6 @@ public class ProgressPieView extends View {
     }
 	
 	/**
-     * Sets the progress limit used inside the mProgressFillRunnable Runnable.
-     */
-    public void setAnimationProgressLimit(int progressLimit){
-        this.mAnimationProgressLimit = progressLimit;
-    }
-
-    /**
-     * Returns the current animation progress limit.
-     */
-    public int getAnimationProgressLimit(){
-        return this.mAnimationProgressLimit;
-    }
-	
-	/**
      * Sets the animation speed used in the animateProgressFill method.
      */
     public void setAnimationSpeed(int animationSpeed){
@@ -277,7 +246,23 @@ public class ProgressPieView extends View {
      * Animates a progress fill of the view, using a Handler and a Runnable.
      */
     public void animateProgressFill(){
-        mProgressFillRunnable.run();
+        AnimationRunnable runnable = new AnimationRunnable(mMax);
+        runnable.run();
+        invalidate();
+    }
+
+    /**
+     * Animates a progress fill of the view, using a Handler and a Runnable.
+     * @param animateTo - the progress value the animation should stop at
+     */
+    public void animateProgressFill(int animateTo){
+        if (animateTo > mMax) {
+            throw new IllegalArgumentException(
+                    String.format("Animation progress (%d) is greater than the max progress (%d) ", animateTo, mMax));
+        }
+
+        AnimationRunnable runnable = new AnimationRunnable(animateTo);
+        runnable.run();
         invalidate();
     }
 
@@ -551,6 +536,31 @@ public class ProgressPieView extends View {
      */
     public void setOnProgressListener(OnProgressListener listener) {
         mListener = listener;
+    }
+
+    /**
+     * Runnable used by the Handler to perform the fill animation.
+     */
+    private class AnimationRunnable implements Runnable {
+
+        private int mAnimateTo;
+
+        AnimationRunnable(int animateTo) {
+            mAnimateTo = animateTo;
+        }
+
+        @Override
+        public void run() {
+            if (getProgress() > mAnimateTo) {
+                throw new IllegalArgumentException(
+                        String.format("Animation progress (%d) is lower than the current progress (%d) ", mAnimateTo, getProgress()));
+            } else if (getProgress() < mAnimateTo) {
+                setProgress(getProgress() + 1);
+                mProgressHandler.postDelayed(this, mAnimationSpeed);
+            } else {
+                mProgressHandler.removeCallbacks(this);
+            }
+        }
     }
 
 }

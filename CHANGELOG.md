@@ -1,6 +1,10 @@
 Changelog
 =========
 
+v1.0.2
+------
+* Possibility to animate the view added
+
 v1.0.1
 ------
 * Added onMeasure behaviour to enable wrap_content and match_parent
