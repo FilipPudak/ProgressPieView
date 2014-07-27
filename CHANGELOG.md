@@ -1,6 +1,10 @@
 Changelog
 =========
 
+v1.0.3
+------
+* Animation updated - now possible to animate backwards
+
 v1.0.2
 ------
 * Possibility to animate the view added
