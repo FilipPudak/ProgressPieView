@@ -11,6 +11,7 @@ import android.graphics.RectF;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
+import android.os.Message;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
@@ -68,10 +69,9 @@ public class ProgressPieView extends View {
     private int mProgressFillType = FILL_TYPE_RADIAL;
 	
 	private int mAnimationSpeed = MEDIUM_ANIMATION_SPEED;
+    private AnimationHandler mAnimationHandler = new AnimationHandler();
 
     private int mViewSize;
-	
-	private final Handler mProgressHandler = new Handler();
 
     public ProgressPieView(Context context) {
         this(context, null);
@@ -243,26 +243,36 @@ public class ProgressPieView extends View {
     }
 
     /**
-     * Animates a progress fill of the view, using a Handler and a Runnable.
+     * Animates a progress fill of the view, using a Handler.
      */
-    public void animateProgressFill(){
-        AnimationRunnable runnable = new AnimationRunnable(mMax);
-        runnable.run();
+    public void animateProgressFill() {
+        mAnimationHandler.removeMessages(0);
+        mAnimationHandler.setAnimateTo(mMax);
+        mAnimationHandler.sendEmptyMessage(0);
         invalidate();
     }
 
     /**
-     * Animates a progress fill of the view, using a Handler and a Runnable.
-     * @param animateTo - the progress value the animation should stop at
+     * Animates a progress fill of the view, using a Handler.
+     * @param animateTo - the progress value the animation should stop at (0 - MAX)
      */
-    public void animateProgressFill(int animateTo){
-        if (animateTo > mMax) {
+    public void animateProgressFill(int animateTo) {
+        mAnimationHandler.removeMessages(0);
+        if (animateTo > mMax || animateTo < 0) {
             throw new IllegalArgumentException(
-                    String.format("Animation progress (%d) is greater than the max progress (%d) ", animateTo, mMax));
+                    String.format("Animation progress (%d) is greater than the max progress (%d) or lower than 0 ", animateTo, mMax));
         }
+        mAnimationHandler.setAnimateTo(animateTo);
+        mAnimationHandler.sendEmptyMessage(0);
+        invalidate();
+    }
 
-        AnimationRunnable runnable = new AnimationRunnable(animateTo);
-        runnable.run();
+    /**
+     * Stops the views animation.
+     */
+    public void stopAnimating() {
+        mAnimationHandler.removeMessages(0);
+        mAnimationHandler.setAnimateTo(mProgress);
         invalidate();
     }
 
@@ -539,26 +549,26 @@ public class ProgressPieView extends View {
     }
 
     /**
-     * Runnable used by the Handler to perform the fill animation.
+     * Handler used to perform the fill animation.
      */
-    private class AnimationRunnable implements Runnable {
+    private class AnimationHandler extends Handler {
 
         private int mAnimateTo;
 
-        AnimationRunnable(int animateTo) {
+        public void setAnimateTo(int animateTo) {
             mAnimateTo = animateTo;
         }
 
         @Override
-        public void run() {
-            if (getProgress() > mAnimateTo) {
-                throw new IllegalArgumentException(
-                        String.format("Animation progress (%d) is lower than the current progress (%d) ", mAnimateTo, getProgress()));
-            } else if (getProgress() < mAnimateTo) {
-                setProgress(getProgress() + 1);
-                mProgressHandler.postDelayed(this, mAnimationSpeed);
+        public void handleMessage(Message msg) {
+            if (mProgress > mAnimateTo) {
+                setProgress(mProgress - 1);
+                sendEmptyMessageDelayed(0, mAnimationSpeed);
+            } else if (mProgress < mAnimateTo) {
+                setProgress(mProgress + 1);
+                sendEmptyMessageDelayed(0, mAnimationSpeed);
             } else {
-                mProgressHandler.removeCallbacks(this);
+                removeMessages(0);
             }
         }
     }
