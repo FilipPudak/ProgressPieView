@@ -158,8 +158,10 @@ public class ProgressPieView extends View {
         super.onDraw(canvas);
         mInnerRectF.set(0, 0, mViewSize, mViewSize);
         mInnerRectF.offset((getWidth() - mViewSize) / 2, (getHeight() - mViewSize) / 2);
-        final int halfBorder = (int) (mStrokePaint.getStrokeWidth() / 2f + 0.5f);
-        mInnerRectF.inset(halfBorder, halfBorder);
+        if (mShowStroke) {
+            final int halfBorder = (int) (mStrokePaint.getStrokeWidth() / 2f + 0.5f);
+            mInnerRectF.inset(halfBorder, halfBorder);
+        }
         float centerX = mInnerRectF.centerX();
         float centerY = mInnerRectF.centerY();
 
@@ -172,7 +174,10 @@ public class ProgressPieView extends View {
                 break;
             case FILL_TYPE_CENTER:
                 float radius = (mViewSize / 2) * ((float) mProgress / mMax);
-                canvas.drawCircle(centerX, centerY, radius + 0.5f - mStrokePaint.getStrokeWidth(), mProgressPaint);
+                if (mShowStroke) {
+                    radius = radius + 0.5f - mStrokePaint.getStrokeWidth();
+                }
+                canvas.drawCircle(centerX, centerY, radius, mProgressPaint);
                 break;
             default:
                 throw new IllegalArgumentException("Invalid Progress Fill = " + mProgressFillType);
