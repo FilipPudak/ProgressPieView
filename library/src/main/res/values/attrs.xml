@@ -5,6 +5,7 @@
         <attr name="max" format="integer"/>
         <attr name="startAngle" format="integer"/>
         <attr name="inverted" format="boolean"/>
+        <attr name="counterclockwise" format="boolean"/>
         <attr name="strokeWidth" format="dimension"/>
         <attr name="backgroundColor" format="reference|color"/>
         <attr name="progressColor" format="reference|color"/>

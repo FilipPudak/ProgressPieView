@@ -53,6 +53,7 @@ public class ProgressPieView extends View {
     private int mProgress = DEFAULT_PROGRESS;
     private int mStartAngle = DEFAULT_START_ANGLE;
     private boolean mInverted = false;
+    private boolean mCounterclockwise = false;
     private boolean mShowStroke = true;
     private float mStrokeWidth = DEFAULT_STROKE_WIDTH;
     private boolean mShowText = true;
@@ -100,6 +101,7 @@ public class ProgressPieView extends View {
         mProgress = a.getInteger(R.styleable.ProgressPieView_progress, mProgress);
         mStartAngle = a.getInt(R.styleable.ProgressPieView_startAngle, mStartAngle);
         mInverted = a.getBoolean(R.styleable.ProgressPieView_inverted, mInverted);
+        mCounterclockwise = a.getBoolean(R.styleable.ProgressPieView_counterclockwise, mCounterclockwise);
         mStrokeWidth = a.getDimension(R.styleable.ProgressPieView_strokeWidth, mStrokeWidth);
         mTypeface = a.getString(R.styleable.ProgressPieView_typeface);
         mTextSize = a.getDimension(R.styleable.ProgressPieView_android_textSize, mTextSize);
@@ -172,6 +174,9 @@ public class ProgressPieView extends View {
                 float sweepAngle = 360 * mProgress / mMax;
                 if (mInverted) {
                     sweepAngle = sweepAngle - 360;
+                }
+                if (mCounterclockwise) {
+                    sweepAngle = -sweepAngle;
                 }
                 canvas.drawArc(mInnerRectF, mStartAngle, sweepAngle, true, mProgressPaint);
                 break;
@@ -335,6 +340,21 @@ public class ProgressPieView extends View {
      */
     public void setInverted(boolean inverted) {
         mInverted = inverted;
+    }
+
+    /**
+     * Gets the counterclockwise state.
+     */
+    public boolean isCounterclockwise() {
+        return mCounterclockwise;
+    }
+
+    /**
+     * Sets the counterclockwise state.
+     * @param counterclockwise draw the progress counterclockwise or not
+     */
+    public void setCounterclockwise(boolean counterclockwise) {
+        mCounterclockwise = counterclockwise;
     }
 
     /**

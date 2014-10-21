@@ -37,8 +37,9 @@
             android:layout_weight="1"
             android:layout_gravity="center"
             android:id="@+id/progressPieViewInverted"
-            android:text="Inverted"
-            ppv:inverted="true"/>
+            android:text="Inv. &amp; CCW"
+            ppv:inverted="true"
+            ppv:counterclockwise="true"/>
 
         <com.filippudak.ProgressPieView.ProgressPieView
             android:layout_margin="8dp"

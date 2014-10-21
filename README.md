@@ -12,6 +12,7 @@ Choose from the broad spectre of styleable elements:
  * `backgroundColor` - The color of the views background.
  * `progressColor` - The color view of the views progress.
  * `inverted` - Inverts the drawing of progress (fill radial only).
+ * `counterclockwise` - Draws the progress counterclockwise (fill radial only).
  * `text` - text (can be hidden).
  * `typeface` - Font of the text.
  * `textSize` - Size of the text.
