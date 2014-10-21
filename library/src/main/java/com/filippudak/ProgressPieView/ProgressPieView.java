@@ -52,6 +52,7 @@ public class ProgressPieView extends View {
     private int mMax = DEFAULT_MAX;
     private int mProgress = DEFAULT_PROGRESS;
     private int mStartAngle = DEFAULT_START_ANGLE;
+    private boolean mInverted = false;
     private boolean mShowStroke = true;
     private float mStrokeWidth = DEFAULT_STROKE_WIDTH;
     private boolean mShowText = true;
@@ -98,6 +99,7 @@ public class ProgressPieView extends View {
         mMax = a.getInteger(R.styleable.ProgressPieView_max, mMax);
         mProgress = a.getInteger(R.styleable.ProgressPieView_progress, mProgress);
         mStartAngle = a.getInt(R.styleable.ProgressPieView_startAngle, mStartAngle);
+        mInverted = a.getBoolean(R.styleable.ProgressPieView_inverted, mInverted);
         mStrokeWidth = a.getDimension(R.styleable.ProgressPieView_strokeWidth, mStrokeWidth);
         mTypeface = a.getString(R.styleable.ProgressPieView_typeface);
         mTextSize = a.getDimension(R.styleable.ProgressPieView_android_textSize, mTextSize);
@@ -168,6 +170,9 @@ public class ProgressPieView extends View {
         switch (mProgressFillType) {
             case FILL_TYPE_RADIAL:
                 float sweepAngle = 360 * mProgress / mMax;
+                if (mInverted) {
+                    sweepAngle = sweepAngle - 360;
+                }
                 canvas.drawArc(mInnerRectF, mStartAngle, sweepAngle, true, mProgressPaint);
                 break;
             case FILL_TYPE_CENTER:
@@ -315,6 +320,21 @@ public class ProgressPieView extends View {
      */
     public void setStartAngle(int startAngle) {
         mStartAngle = startAngle;
+    }
+
+    /**
+     * Gets the inverted state.
+     */
+    public boolean isInverted() {
+        return mInverted;
+    }
+
+    /**
+     * Sets the inverted state.
+     * @param inverted draw the progress inverted or not
+     */
+    public void setInverted(boolean inverted) {
+        mInverted = inverted;
     }
 
     /**

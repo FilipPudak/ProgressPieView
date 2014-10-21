@@ -18,6 +18,7 @@ public class MainActivity extends ActionBarActivity {
 
     private SeekBar mSeekBar;
     private ProgressPieView mProgressPieView;
+    private ProgressPieView mProgressPieViewInverted;
     private ProgressPieView mProgressPieViewXml;
     private ProgressPieView mProgressPieViewCode;
 
@@ -68,6 +69,9 @@ public class MainActivity extends ActionBarActivity {
             }
         });
 
+        // Inverted default version
+        mProgressPieViewInverted = (ProgressPieView) findViewById(R.id.progressPieViewInverted);
+
         // XML version
         mProgressPieViewXml = (ProgressPieView) findViewById(R.id.progressPieViewXml);
 
@@ -78,6 +82,7 @@ public class MainActivity extends ActionBarActivity {
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
                 mProgressPieView.setProgress(i);
                 mProgressPieView.setText(i + "%");
+                mProgressPieViewInverted.setProgress(i);
                 mProgressPieViewXml.setProgress(i);
                 mProgressPieViewCode.setProgress(i);
             }
@@ -105,6 +110,8 @@ public class MainActivity extends ActionBarActivity {
         if (item.getItemId() == R.id.menu_item_animate) {
             mProgressPieView.setProgress(0);
             mProgressPieView.animateProgressFill();
+            mProgressPieViewInverted.setProgress(0);
+            mProgressPieViewInverted.animateProgressFill();
             mProgressPieViewXml.setProgress(0);
             mProgressPieViewXml.animateProgressFill();
             mProgressPieViewCode.setProgress(0);
