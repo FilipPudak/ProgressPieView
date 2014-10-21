@@ -62,7 +62,9 @@ public class ProgressPieView extends View {
     private String mTypeface;
     private boolean mShowImage = true;
     private Drawable mImage;
+    private Drawable mBackgroundImage;
     private Rect mImageRect;
+    private Rect mBackgroundImageRect;
     private Paint mStrokePaint;
     private Paint mTextPaint;
     private Paint mProgressPaint;
@@ -110,6 +112,7 @@ public class ProgressPieView extends View {
         mShowStroke = a.getBoolean(R.styleable.ProgressPieView_ppvShowStroke, mShowStroke);
         mShowText = a.getBoolean(R.styleable.ProgressPieView_ppvShowText, mShowText);
         mImage = a.getDrawable(R.styleable.ProgressPieView_ppvImage);
+        mBackgroundImage = a.getDrawable(R.styleable.ProgressPieView_ppvBackgroundImage);
 
         int backgroundColor = res.getColor(R.color.default_background_color);
         backgroundColor = a.getColor(R.styleable.ProgressPieView_ppvBackgroundColor, backgroundColor);
@@ -144,6 +147,7 @@ public class ProgressPieView extends View {
 
         mInnerRectF = new RectF();
         mImageRect = new Rect();
+        mBackgroundImageRect = new Rect();
     }
 
     @Override
@@ -169,7 +173,15 @@ public class ProgressPieView extends View {
         float centerX = mInnerRectF.centerX();
         float centerY = mInnerRectF.centerY();
 
-        canvas.drawArc(mInnerRectF, 0, 360, true, mBackgroundPaint);
+        if (mBackgroundImage != null) {
+            int drawableSize = mBackgroundImage.getIntrinsicWidth();
+            mBackgroundImageRect.set(0, 0, drawableSize, drawableSize);
+            mBackgroundImageRect.offset((getWidth() - drawableSize) / 2, (getHeight() - drawableSize) / 2);
+            mBackgroundImage.setBounds(mBackgroundImageRect);
+            mBackgroundImage.draw(canvas);
+        } else {
+            canvas.drawArc(mInnerRectF, 0, 360, true, mBackgroundPaint);
+        }
 
         switch (mProgressFillType) {
             case FILL_TYPE_RADIAL:
@@ -523,6 +535,33 @@ public class ProgressPieView extends View {
     public void setShowStroke(boolean showStroke) {
         mShowStroke = showStroke;
         invalidate();
+    }
+
+    /**
+     * Gets the background drawable of the view.
+     */
+    public Drawable getBackgroundImageDrawable() {
+        return mBackgroundImage;
+    }
+
+    /**
+     * Sets the background drawable of the view.
+     * @param backgroundImage background drawable of the view
+     */
+    public void setBackgroundImageDrawable(Drawable backgroundImage) {
+        mBackgroundImage = backgroundImage;
+        invalidate();
+    }
+
+    /**
+     * Sets the background drawable of the view.
+     * @param resId resource id of the view's background drawable
+     */
+    public void setBackgroundImageResource(int resId) {
+        if (null != getResources()) {
+            mBackgroundImage = getResources().getDrawable(resId);
+            invalidate();
+        }
     }
 
     /**

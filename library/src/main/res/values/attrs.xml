@@ -11,6 +11,7 @@
         <attr name="ppvCounterclockwise" format="boolean"/>
         <attr name="ppvStrokeWidth" format="dimension"/>
         <attr name="ppvBackgroundColor" format="reference|color"/>
+        <attr name="ppvBackgroundImage" format="reference"/>
         <attr name="ppvProgressColor" format="reference|color"/>
         <attr name="ppvStrokeColor" format="reference|color"/>
         <attr name="ppvShowStroke" format="boolean"/>
