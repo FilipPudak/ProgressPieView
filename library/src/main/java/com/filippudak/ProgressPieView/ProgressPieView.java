@@ -56,7 +56,7 @@ public class ProgressPieView extends View {
     private boolean mCounterclockwise = false;
     private boolean mShowStroke = true;
     private float mStrokeWidth = DEFAULT_STROKE_WIDTH;
-    private boolean mShowText = true;
+    private boolean mDisplayText = true;
     private float mTextSize = DEFAULT_TEXT_SIZE;
     private String mText;
     private String mTypeface;
@@ -108,7 +108,7 @@ public class ProgressPieView extends View {
         mText = a.getString(R.styleable.ProgressPieView_android_text);
 
         mShowStroke = a.getBoolean(R.styleable.ProgressPieView_showStroke, mShowStroke);
-        mShowText = a.getBoolean(R.styleable.ProgressPieView_showText, mShowText);
+        mDisplayText = a.getBoolean(R.styleable.ProgressPieView_displayText, mDisplayText);
         mImage = a.getDrawable(R.styleable.ProgressPieView_image);
 
         int backgroundColor = res.getColor(R.color.default_background_color);
@@ -193,7 +193,7 @@ public class ProgressPieView extends View {
                 throw new IllegalArgumentException("Invalid Progress Fill = " + mProgressFillType);
         }
 
-        if (!TextUtils.isEmpty(mText) && mShowText) {
+        if (!TextUtils.isEmpty(mText) && mDisplayText) {
             if (!TextUtils.isEmpty(mTypeface)) {
                 Typeface typeface = sTypefaceCache.get(mTypeface);
                 if (null == typeface && null != getResources()) {
@@ -463,16 +463,16 @@ public class ProgressPieView extends View {
     /**
      * Gets the show text state.
      */
-    public boolean isTextShowing() {
-        return mShowText;
+    public boolean isDisplayShowing() {
+        return mDisplayText;
     }
 
     /**
      * Sets the show text state.
-     * @param showText show or hide text
+     * @param displayText show or hide text
      */
-    public void setShowText(boolean showText) {
-        mShowText = showText;
+    public void setDisplayText(boolean displayText) {
+        mDisplayText = displayText;
         invalidate();
     }
 

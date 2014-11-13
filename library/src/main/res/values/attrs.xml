@@ -11,7 +11,7 @@
         <attr name="progressColor" format="reference|color"/>
         <attr name="strokeColor" format="reference|color"/>
         <attr name="showStroke" format="boolean"/>
-        <attr name="showText" format="boolean"/>
+        <attr name="displayText" format="boolean"/>
         <attr name="typeface" format="string"/>
         <attr name="image" format="reference"/>
         <attr name="android:text"/>
