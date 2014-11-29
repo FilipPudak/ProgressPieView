@@ -6,19 +6,19 @@ Android library for showing progress in a highly customizable pie.
 ![ProgressPieView](/sample/images/progresspieview.png)
 
 Choose from the broad spectre of styleable elements:
- 
- * `strokeWidth` - The width of stroke around the view.
- * `strokeColor` - The color of stroke around the view.
- * `backgroundColor` - The color of the views background.
- * `progressColor` - The color view of the views progress.
- * `inverted` - Inverts the drawing of progress (fill radial only).
- * `counterclockwise` - Draws the progress counterclockwise (fill radial only).
+
+ * `ppvStrokeWidth` - The width of stroke around the view.
+ * `ppvStrokeColor` - The color of stroke around the view.
+ * `ppvBackgroundColor` - The color of the views background.
+ * `ppvProgressColor` - The color view of the views progress.
+ * `ppvInverted` - Inverts the drawing of progress (fill radial only).
+ * `ppvCounterclockwise` - Draws the progress counterclockwise (fill radial only).
+ * `ppvProgressFillType` - Type for the progress fill (either fill radial at an angle or fill from center outwards).
+ * `ppvImage` - image (can be hidden).
+ * `ppvTypeface` - Font of the text.
  * `text` - text (can be hidden).
- * `typeface` - Font of the text.
  * `textSize` - Size of the text.
  * `textColor` - Color of the text.
- * `image` - image (can be hidden).
- * `progressFillType` - Type for the progress fill (either fill radial at an angle or fill from center outwards).
 
 Usage
 ======
@@ -42,21 +42,22 @@ dependencies {
 Example
 =======
 ```xml
- <com.filippudak.ProgressPieView.ProgressPieView
+        <com.filippudak.ProgressPieView.ProgressPieView
             android:layout_margin="8dp"
-            android:layout_gravity="center_horizontal"
+            android:layout_gravity="center"
             android:id="@+id/progressPieViewXml"
-            android:layout_width="96dp"
-            android:layout_height="96dp"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
             android:textColor="@color/holo_orange_dark"
             android:textSize="18sp"
             android:text="Xml"
-            ppv:typeface="fonts/Roboto/RobotoCondensed-Bold.ttf"
-            ppv:progressFillType="center"
-            ppv:strokeWidth="6dp"
-            ppv:strokeColor="@color/holo_green_light"
-            ppv:backgroundColor="@color/holo_purple"
-            ppv:progressColor="@color/holo_red_light"/>
+            ppv:ppvTypeface="fonts/Roboto/RobotoCondensed-Bold.ttf"
+            ppv:ppvProgressFillType="center"
+            ppv:ppvStrokeWidth="6dp"
+            ppv:ppvStrokeColor="@color/holo_green_light"
+            ppv:ppvBackgroundColor="@color/holo_purple"
+            ppv:ppvProgressColor="@color/holo_red_light"/>
 ```
 You can find more examples from code styling or xml styling in the sample that is provided.
 

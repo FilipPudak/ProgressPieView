@@ -97,30 +97,30 @@ public class ProgressPieView extends View {
         final TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.ProgressPieView);
         final Resources res = getResources();
 
-        mMax = a.getInteger(R.styleable.ProgressPieView_max, mMax);
-        mProgress = a.getInteger(R.styleable.ProgressPieView_progress, mProgress);
-        mStartAngle = a.getInt(R.styleable.ProgressPieView_startAngle, mStartAngle);
-        mInverted = a.getBoolean(R.styleable.ProgressPieView_inverted, mInverted);
-        mCounterclockwise = a.getBoolean(R.styleable.ProgressPieView_counterclockwise, mCounterclockwise);
-        mStrokeWidth = a.getDimension(R.styleable.ProgressPieView_strokeWidth, mStrokeWidth);
-        mTypeface = a.getString(R.styleable.ProgressPieView_typeface);
+        mMax = a.getInteger(R.styleable.ProgressPieView_ppvMax, mMax);
+        mProgress = a.getInteger(R.styleable.ProgressPieView_ppvProgress, mProgress);
+        mStartAngle = a.getInt(R.styleable.ProgressPieView_ppvStartAngle, mStartAngle);
+        mInverted = a.getBoolean(R.styleable.ProgressPieView_ppvInverted, mInverted);
+        mCounterclockwise = a.getBoolean(R.styleable.ProgressPieView_ppvCounterclockwise, mCounterclockwise);
+        mStrokeWidth = a.getDimension(R.styleable.ProgressPieView_ppvStrokeWidth, mStrokeWidth);
+        mTypeface = a.getString(R.styleable.ProgressPieView_ppvTypeface);
         mTextSize = a.getDimension(R.styleable.ProgressPieView_android_textSize, mTextSize);
         mText = a.getString(R.styleable.ProgressPieView_android_text);
 
-        mShowStroke = a.getBoolean(R.styleable.ProgressPieView_showStroke, mShowStroke);
-        mShowText = a.getBoolean(R.styleable.ProgressPieView_showText, mShowText);
-        mImage = a.getDrawable(R.styleable.ProgressPieView_image);
+        mShowStroke = a.getBoolean(R.styleable.ProgressPieView_ppvShowStroke, mShowStroke);
+        mShowText = a.getBoolean(R.styleable.ProgressPieView_ppvShowText, mShowText);
+        mImage = a.getDrawable(R.styleable.ProgressPieView_ppvImage);
 
         int backgroundColor = res.getColor(R.color.default_background_color);
-        backgroundColor = a.getColor(R.styleable.ProgressPieView_backgroundColor, backgroundColor);
+        backgroundColor = a.getColor(R.styleable.ProgressPieView_ppvBackgroundColor, backgroundColor);
         int progressColor = res.getColor(R.color.default_progress_color);
-        progressColor = a.getColor(R.styleable.ProgressPieView_progressColor, progressColor);
+        progressColor = a.getColor(R.styleable.ProgressPieView_ppvProgressColor, progressColor);
         int strokeColor = res.getColor(R.color.default_stroke_color);
-        strokeColor = a.getColor(R.styleable.ProgressPieView_strokeColor, strokeColor);
+        strokeColor = a.getColor(R.styleable.ProgressPieView_ppvStrokeColor, strokeColor);
         int textColor = res.getColor(R.color.default_text_color);
         textColor = a.getColor(R.styleable.ProgressPieView_android_textColor, textColor);
 
-        mProgressFillType = a.getInteger(R.styleable.ProgressPieView_progressFillType, mProgressFillType);
+        mProgressFillType = a.getInteger(R.styleable.ProgressPieView_ppvProgressFillType, mProgressFillType);
 
         a.recycle();
 

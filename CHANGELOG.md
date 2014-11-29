@@ -1,6 +1,10 @@
 Changelog
 =========
 
+v1.0.4
+------
+* Updated with Lolipop Appcompat compatibility
+
 v1.0.3
 ------
 * Animation updated - now possible to animate backwards

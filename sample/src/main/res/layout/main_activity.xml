@@ -37,9 +37,9 @@
             android:layout_weight="1"
             android:layout_gravity="center"
             android:id="@+id/progressPieViewInverted"
-            android:text="Inv. &amp; CCW"
-            ppv:inverted="true"
-            ppv:counterclockwise="true"/>
+            android:text="CCW"
+            ppv:ppvInverted="true"
+            ppv:ppvCounterclockwise="true"/>
 
         <com.filippudak.ProgressPieView.ProgressPieView
             android:layout_margin="8dp"
@@ -51,12 +51,12 @@
             android:textColor="@color/holo_orange_dark"
             android:textSize="18sp"
             android:text="Xml"
-            ppv:typeface="fonts/Roboto/RobotoCondensed-Bold.ttf"
-            ppv:progressFillType="center"
-            ppv:strokeWidth="6dp"
-            ppv:strokeColor="@color/holo_green_light"
-            ppv:backgroundColor="@color/holo_purple"
-            ppv:progressColor="@color/holo_red_light"/>
+            ppv:ppvTypeface="fonts/Roboto/RobotoCondensed-Bold.ttf"
+            ppv:ppvProgressFillType="center"
+            ppv:ppvStrokeWidth="6dp"
+            ppv:ppvStrokeColor="@color/holo_green_light"
+            ppv:ppvBackgroundColor="@color/holo_purple"
+            ppv:ppvProgressColor="@color/holo_red_light"/>
     </LinearLayout>
 
 
