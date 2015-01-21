@@ -10,6 +10,7 @@ Choose from the broad spectre of styleable elements:
  * `ppvStrokeWidth` - The width of stroke around the view.
  * `ppvStrokeColor` - The color of stroke around the view.
  * `ppvBackgroundColor` - The color of the views background.
+ * `ppvBackgroundImage` - The background image for the view (takes precedence over the background color).
  * `ppvProgressColor` - The color view of the views progress.
  * `ppvInverted` - Inverts the drawing of progress (fill radial only).
  * `ppvCounterclockwise` - Draws the progress counterclockwise (fill radial only).
