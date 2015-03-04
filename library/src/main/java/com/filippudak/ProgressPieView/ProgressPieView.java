@@ -18,10 +18,31 @@ import android.util.DisplayMetrics;
 import android.support.v4.util.LruCache;
 import android.view.View;
 
+/**
+ * Customization includes
+ * <ol>
+ * <li>Adding a boolean value mAnimateStroke to animate stroke or not</li>
+ * <li>If mShowStroke=false, mAnimateStroke=false</li>
+ * <li>mStrokeRectF is the main RectF responsible for drawing and animating stroke</li>
+ * <li>mStrokePaint is the main color for mStrokeRectF</li>
+ * <li>mStrokeRectF drawing is only possible for FILL_TYPE_RADIAL</li>
+ * <li>onDraw() method mStrokeRectF have same dimension as that of mInnerRectF</li>
+ * </ol>
+ * Customization lines
+ * <ol>
+ * <li>100-101</li>
+ * <li>151-153</li>
+ * <li>179-180</li>
+ * <li>206-210</li>
+ * <li>230-231</li>
+ * <li>270-271</li>
+ * </ol>
+ */
 public class ProgressPieView extends View {
 
     public interface OnProgressListener {
         public void onProgressChanged(int progress, int max);
+
         public void onProgressCompleted();
     }
 
@@ -34,7 +55,7 @@ public class ProgressPieView extends View {
      */
     public static final int FILL_TYPE_CENTER = 1;
 
-	public static final int SLOW_ANIMATION_SPEED = 50;
+    public static final int SLOW_ANIMATION_SPEED = 50;
     public static final int MEDIUM_ANIMATION_SPEED = 25;
     public static final int FAST_ANIMATION_SPEED = 1;
 
@@ -69,11 +90,15 @@ public class ProgressPieView extends View {
     private Paint mBackgroundPaint;
     private RectF mInnerRectF;
     private int mProgressFillType = FILL_TYPE_RADIAL;
-	
-	private int mAnimationSpeed = MEDIUM_ANIMATION_SPEED;
+
+    private int mAnimationSpeed = MEDIUM_ANIMATION_SPEED;
     private AnimationHandler mAnimationHandler = new AnimationHandler();
 
     private int mViewSize;
+
+    //Customization Values
+    private RectF mStrokeRectF;
+    private boolean mAnimateStroke = false;
 
     public ProgressPieView(Context context) {
         this(context, null);
@@ -122,6 +147,11 @@ public class ProgressPieView extends View {
 
         mProgressFillType = a.getInteger(R.styleable.ProgressPieView_ppvProgressFillType, mProgressFillType);
 
+        //Customization
+        mAnimateStroke = a.getBoolean(R.styleable.ProgressPieView_ppvAnimateStroke, mAnimateStroke);
+        if (!mShowStroke)
+            mAnimateStroke = false;
+
         a.recycle();
 
         mBackgroundPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -144,6 +174,12 @@ public class ProgressPieView extends View {
 
         mInnerRectF = new RectF();
         mImageRect = new Rect();
+
+        //Customization
+        if (mAnimateStroke) {
+            mStrokeRectF = new RectF();
+        }
+
     }
 
     @Override
@@ -162,10 +198,19 @@ public class ProgressPieView extends View {
         super.onDraw(canvas);
         mInnerRectF.set(0, 0, mViewSize, mViewSize);
         mInnerRectF.offset((getWidth() - mViewSize) / 2, (getHeight() - mViewSize) / 2);
+
         if (mShowStroke) {
             final int halfBorder = (int) (mStrokePaint.getStrokeWidth() / 2f + 0.5f);
             mInnerRectF.inset(halfBorder, halfBorder);
+            //Customization
+            if (mAnimateStroke) {
+                mStrokeRectF.set(0, 0, mViewSize, mViewSize);
+                mStrokeRectF.offset((getWidth() - mViewSize) / 2, (getHeight() - mViewSize) / 2);
+                mStrokeRectF.inset(halfBorder, halfBorder);
+            }
         }
+
+
         float centerX = mInnerRectF.centerX();
         float centerY = mInnerRectF.centerY();
 
@@ -181,6 +226,9 @@ public class ProgressPieView extends View {
                     sweepAngle = -sweepAngle;
                 }
                 canvas.drawArc(mInnerRectF, mStartAngle, sweepAngle, true, mProgressPaint);
+                //Customization: Drawing/animating stroke
+                if (mAnimateStroke)
+                    canvas.drawArc(mStrokeRectF, mStartAngle, sweepAngle, false, mStrokePaint);
                 break;
             case FILL_TYPE_CENTER:
                 float radius = (mViewSize / 2) * ((float) mProgress / mMax);
@@ -218,7 +266,8 @@ public class ProgressPieView extends View {
             mImage.draw(canvas);
         }
 
-        if (mShowStroke) {
+        //Customization
+        if (mShowStroke && !mAnimateStroke) {
             canvas.drawOval(mInnerRectF, mStrokePaint);
         }
 
@@ -242,18 +291,18 @@ public class ProgressPieView extends View {
         mMax = max;
         invalidate();
     }
-	
-	/**
+
+    /**
      * Sets the animation speed used in the animateProgressFill method.
      */
-    public void setAnimationSpeed(int animationSpeed){
+    public void setAnimationSpeed(int animationSpeed) {
         this.mAnimationSpeed = animationSpeed;
     }
 
     /**
      * Returns the current animation speed used in animateProgressFill method.
      */
-    public int getAnimationSpeed(){
+    public int getAnimationSpeed() {
         return this.mAnimationSpeed;
     }
 
@@ -269,6 +318,7 @@ public class ProgressPieView extends View {
 
     /**
      * Animates a progress fill of the view, using a Handler.
+     *
      * @param animateTo - the progress value the animation should stop at (0 - MAX)
      */
     public void animateProgressFill(int animateTo) {
@@ -326,6 +376,7 @@ public class ProgressPieView extends View {
 
     /**
      * Sets the start angle the {@link #FILL_TYPE_RADIAL} uses.
+     *
      * @param startAngle start angle in degrees
      */
     public void setStartAngle(int startAngle) {
@@ -341,6 +392,7 @@ public class ProgressPieView extends View {
 
     /**
      * Sets the inverted state.
+     *
      * @param inverted draw the progress inverted or not
      */
     public void setInverted(boolean inverted) {
@@ -356,6 +408,7 @@ public class ProgressPieView extends View {
 
     /**
      * Sets the counterclockwise state.
+     *
      * @param counterclockwise draw the progress counterclockwise or not
      */
     public void setCounterclockwise(boolean counterclockwise) {
@@ -370,8 +423,9 @@ public class ProgressPieView extends View {
     }
 
     /**
-     *  Sets the color used to display the progress of the view.
-     *  @param color - color of the progress part of the view
+     * Sets the color used to display the progress of the view.
+     *
+     * @param color - color of the progress part of the view
      */
     public void setProgressColor(int color) {
         mProgressPaint.setColor(color);
@@ -379,7 +433,7 @@ public class ProgressPieView extends View {
     }
 
     /**
-     *  Gets the color used to display the background of the view.
+     * Gets the color used to display the background of the view.
      */
     public int getBackgroundColor() {
         return mBackgroundPaint.getColor();
@@ -387,6 +441,7 @@ public class ProgressPieView extends View {
 
     /**
      * Sets the color used to display the background of the view.
+     *
      * @param color - color of the background part of the view
      */
     public void setBackgroundColor(int color) {
@@ -395,7 +450,7 @@ public class ProgressPieView extends View {
     }
 
     /**
-     *  Gets the color used to display the text of the view.
+     * Gets the color used to display the text of the view.
      */
     public int getTextColor() {
         return mTextPaint.getColor();
@@ -403,6 +458,7 @@ public class ProgressPieView extends View {
 
     /**
      * Sets the color used to display the text of the view.
+     *
      * @param color - color of the text part of the view
      */
     public void setTextColor(int color) {
@@ -419,6 +475,7 @@ public class ProgressPieView extends View {
 
     /**
      * Sets the text size.
+     *
      * @param sizeSp in sp for the text
      */
     public void setTextSize(int sizeSp) {
@@ -436,6 +493,7 @@ public class ProgressPieView extends View {
 
     /**
      * Sets the text of the view.
+     *
      * @param text to be displayed in the view
      */
     public void setText(String text) {
@@ -452,7 +510,8 @@ public class ProgressPieView extends View {
 
     /**
      * Sets the text typeface.
-     *  - i.e. fonts/Roboto/Roboto-Regular.ttf
+     * - i.e. fonts/Roboto/Roboto-Regular.ttf
+     *
      * @param typeface that the text is displayed in
      */
     public void setTypeface(String typeface) {
@@ -469,6 +528,7 @@ public class ProgressPieView extends View {
 
     /**
      * Sets the show text state.
+     *
      * @param showText show or hide text
      */
     public void setShowText(boolean showText) {
@@ -477,7 +537,7 @@ public class ProgressPieView extends View {
     }
 
     /**
-     *  Get the color used to display the stroke of the view.
+     * Get the color used to display the stroke of the view.
      */
     public int getStrokeColor() {
         return mStrokePaint.getColor();
@@ -485,6 +545,7 @@ public class ProgressPieView extends View {
 
     /**
      * Sets the color used to display the stroke of the view.
+     *
      * @param color - color of the stroke part of the view
      */
     public void setStrokeColor(int color) {
@@ -501,6 +562,7 @@ public class ProgressPieView extends View {
 
     /**
      * Set the stroke width.
+     *
      * @param widthDp in dp for the pie border
      */
     public void setStrokeWidth(int widthDp) {
@@ -518,6 +580,7 @@ public class ProgressPieView extends View {
 
     /**
      * Sets the show stroke state.
+     *
      * @param showStroke show or hide stroke
      */
     public void setShowStroke(boolean showStroke) {
@@ -534,6 +597,7 @@ public class ProgressPieView extends View {
 
     /**
      * Sets the drawable of the view.
+     *
      * @param image drawable of the view
      */
     public void setImageDrawable(Drawable image) {
@@ -543,6 +607,7 @@ public class ProgressPieView extends View {
 
     /**
      * Sets the drawable of the view.
+     *
      * @param resId resource id of the view's drawable
      */
     public void setImageResource(int resId) {
@@ -561,6 +626,7 @@ public class ProgressPieView extends View {
 
     /**
      * Sets the show image state.
+     *
      * @param showImage show or hide image
      */
     public void setShowImage(boolean showImage) {
@@ -577,6 +643,7 @@ public class ProgressPieView extends View {
 
     /**
      * Sets the progress fill type.
+     *
      * @param fillType one of {@link #FILL_TYPE_CENTER}, {@link #FILL_TYPE_RADIAL}
      */
     public void setProgressFillType(int fillType) {
@@ -585,8 +652,8 @@ public class ProgressPieView extends View {
 
     /**
      * Sets the progress listner.
-     * @param listener progress listener
      *
+     * @param listener progress listener
      * @see com.filippudak.ProgressPieView.ProgressPieView.OnProgressListener
      */
     public void setOnProgressListener(OnProgressListener listener) {

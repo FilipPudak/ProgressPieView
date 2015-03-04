@@ -1,25 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="ProgressPieView">
-        <attr name="android:text"/>
-        <attr name="android:textSize"/>
-        <attr name="android:textColor"/>
-        <attr name="ppvProgress" format="integer"/>
-        <attr name="ppvMax" format="integer"/>
-        <attr name="ppvStartAngle" format="integer"/>
-        <attr name="ppvInverted" format="boolean"/>
-        <attr name="ppvCounterclockwise" format="boolean"/>
-        <attr name="ppvStrokeWidth" format="dimension"/>
-        <attr name="ppvBackgroundColor" format="reference|color"/>
-        <attr name="ppvProgressColor" format="reference|color"/>
-        <attr name="ppvStrokeColor" format="reference|color"/>
-        <attr name="ppvShowStroke" format="boolean"/>
-        <attr name="ppvShowText" format="boolean"/>
-        <attr name="ppvTypeface" format="string"/>
-        <attr name="ppvImage" format="reference"/>
-        <attr name="ppvProgressFillType" format="enum" >
-            <enum name="radial" value="0"/>
-            <enum name="center" value="1"/>
+        <attr name="android:text" />
+        <attr name="android:textSize" />
+        <attr name="android:textColor" />
+        <attr name="ppvProgress" format="integer" />
+        <attr name="ppvMax" format="integer" />
+        <attr name="ppvStartAngle" format="integer" />
+        <attr name="ppvInverted" format="boolean" />
+        <attr name="ppvCounterclockwise" format="boolean" />
+        <attr name="ppvStrokeWidth" format="dimension" />
+        <attr name="ppvBackgroundColor" format="reference|color" />
+        <attr name="ppvProgressColor" format="reference|color" />
+        <attr name="ppvStrokeColor" format="reference|color" />
+        <attr name="ppvShowStroke" format="boolean" />
+        <attr name="ppvShowText" format="boolean" />
+        <attr name="ppvTypeface" format="string" />
+        <attr name="ppvImage" format="reference" />
+        <attr name="ppvProgressFillType" format="enum">
+            <enum name="radial" value="0" />
+            <enum name="center" value="1" />
         </attr>
+
+        <!--Animate Stroke -->
+        <attr name="ppvAnimateStroke" format="boolean" />
     </declare-styleable>
 </resources>

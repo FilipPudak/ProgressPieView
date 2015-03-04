@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:ppv="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
@@ -13,7 +12,7 @@
         android:id="@+id/seekbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:max="100"/>
+        android:max="100" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -28,7 +27,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:layout_gravity="center"
-            android:id="@+id/progressPieView"/>
+            android:id="@+id/progressPieView" />
 
         <com.filippudak.ProgressPieView.ProgressPieView
             android:layout_margin="8dp"
@@ -39,7 +38,7 @@
             android:id="@+id/progressPieViewInverted"
             android:text="CCW"
             ppv:ppvInverted="true"
-            ppv:ppvCounterclockwise="true"/>
+            ppv:ppvCounterclockwise="true" />
 
         <com.filippudak.ProgressPieView.ProgressPieView
             android:layout_margin="8dp"
@@ -56,8 +55,22 @@
             ppv:ppvStrokeWidth="6dp"
             ppv:ppvStrokeColor="@color/holo_green_light"
             ppv:ppvBackgroundColor="@color/holo_purple"
-            ppv:ppvProgressColor="@color/holo_red_light"/>
+            ppv:ppvProgressColor="@color/holo_red_light" />
     </LinearLayout>
+
+
+    <!--Animate Stroke Changes-->
+    <com.filippudak.ProgressPieView.ProgressPieView
+        android:layout_margin="8dp"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:id="@+id/progressPieViewStrokeAnimate"
+        ppv:ppvStrokeWidth="6dp"
+        ppv:ppvStrokeColor="@color/holo_green_light"
+        ppv:ppvProgressColor="@color/holo_red_light"
+        ppv:ppvBackgroundColor="@color/holo_purple"
+        ppv:ppvAnimateStroke="true"
+        android:text="StAn" />
 
 
 </LinearLayout>

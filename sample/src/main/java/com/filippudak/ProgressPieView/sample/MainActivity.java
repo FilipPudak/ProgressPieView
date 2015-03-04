@@ -11,6 +11,16 @@ import android.widget.SeekBar;
 
 import com.filippudak.ProgressPieView.ProgressPieView;
 
+
+/**
+ * Customization lines
+ * <ol>
+ * <li>34</li>
+ * <li>90</li>
+ * <li>102</li>
+ * <li>137-138</li>
+ * </ol>
+ */
 public class MainActivity extends ActionBarActivity {
 
     private static final int SIZE = 96;
@@ -21,6 +31,8 @@ public class MainActivity extends ActionBarActivity {
     private ProgressPieView mProgressPieViewInverted;
     private ProgressPieView mProgressPieViewXml;
     private ProgressPieView mProgressPieViewCode;
+    //Customization
+    private ProgressPieView mProgressPieViewAnimateStroke;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +87,10 @@ public class MainActivity extends ActionBarActivity {
         // XML version
         mProgressPieViewXml = (ProgressPieView) findViewById(R.id.progressPieViewXml);
 
+        //Customization
+        //Animate Stroke
+        mProgressPieViewAnimateStroke = (ProgressPieView) findViewById(R.id.progressPieViewStrokeAnimate);
+
         // SeekBar 
         mSeekBar = (SeekBar) findViewById(R.id.seekbar);
         mSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -85,6 +101,8 @@ public class MainActivity extends ActionBarActivity {
                 mProgressPieViewInverted.setProgress(i);
                 mProgressPieViewXml.setProgress(i);
                 mProgressPieViewCode.setProgress(i);
+                //Customization
+                mProgressPieViewAnimateStroke.setProgress(i);
             }
 
             @Override
@@ -116,6 +134,9 @@ public class MainActivity extends ActionBarActivity {
             mProgressPieViewXml.animateProgressFill();
             mProgressPieViewCode.setProgress(0);
             mProgressPieViewCode.animateProgressFill();
+            //Customization
+            mProgressPieViewAnimateStroke.setProgress(0);
+            mProgressPieViewAnimateStroke.animateProgressFill();
         }
         return super.onOptionsItemSelected(item);
     }
