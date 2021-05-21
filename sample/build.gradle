@@ -1,13 +1,12 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 21
-    buildToolsVersion "21.1.1"
+    compileSdkVersion 30
 
     defaultConfig {
         applicationId "com.filippudak.ProgressPieView.sample"
         minSdkVersion 8
-        targetSdkVersion 21
+        targetSdkVersion 30
         versionCode Integer.parseInt(project.VERSION_CODE)
         versionName project.VERSION_NAME
     }
@@ -15,6 +14,6 @@ android {
 }
 
 dependencies {
-    compile 'com.android.support:appcompat-v7:21.0.2'
-    compile project(':library')
+    implementation 'com.android.support:appcompat-v7:21.0.2'
+    implementation project(':library')
 }
