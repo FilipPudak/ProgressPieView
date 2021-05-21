@@ -15,8 +15,9 @@ import android.os.Message;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
-import android.support.v4.util.LruCache;
 import android.view.View;
+
+import androidx.collection.LruCache;
 
 public class ProgressPieView extends View {
 

@@ -1,7 +1,6 @@
 package com.filippudak.ProgressPieView.sample;
 
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -9,9 +8,11 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.filippudak.ProgressPieView.ProgressPieView;
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends AppCompatActivity {
 
     private static final int SIZE = 96;
     private static final int MARGIN = 8;
